@@ -1,6 +1,4 @@
-"use client";
-
-import { Button } from "components/ui/button";
+import { Button } from "components/ui/button"
 import {
   DrawerActionTrigger,
   DrawerBackdrop,
@@ -12,75 +10,35 @@ import {
   DrawerRoot,
   DrawerTitle,
   DrawerTrigger,
-} from "components/ui/drawer";
-import { Text } from "@chakra-ui/react";
-import Link from "next/link";
-import routes from "lib/routes";
-import { RxHamburgerMenu } from "react-icons/rx";
-import styles from "./NavBar.module.css";
+} from "components/ui/drawer"
 
 const NavBar = () => {
-  console.log("NAV_ITEMS:", NAV_ITEMS);
-console.log("Routes:", routes);
   return (
     <DrawerRoot>
-      <DrawerBackdrop/>
+      <DrawerBackdrop />
       <DrawerTrigger asChild>
-        <Button aria-label="Open menu" colorPalette="teal" p="5" variant="solid" size="md">
-          <RxHamburgerMenu />
-          <Text textStyle="xl">QuizApp</Text>
+        <Button variant="outline" size="sm">
+          Open Drawer
         </Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader>
-          <DrawerTitle>
-            <Text textStyle="xl">Menu</Text>
-          </DrawerTitle>
+          <DrawerTitle>Drawer Title</DrawerTitle>
         </DrawerHeader>
         <DrawerBody>
-          <nav>
-            <ul className={styles.navList}>
-              {NAV_ITEMS.map((item) => (
-                <li key={item.label} className={styles.navItem}>
-                  <Link href={item.href} className={styles.navLink}>
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
+          <ul>
+            <li></li>
+          </ul>
         </DrawerBody>
         <DrawerFooter>
           <DrawerActionTrigger asChild>
-            <Button aria-label="Close menu" variant="outline">
-              Cancel
-            </Button>
+            <Button variant="outline">Cancel</Button>
           </DrawerActionTrigger>
         </DrawerFooter>
         <DrawerCloseTrigger />
       </DrawerContent>
     </DrawerRoot>
-  );
-};
-
-export default NavBar;
-
-interface NavItem {
-  label: string;
-  href: string;
+  )
 }
 
-const NAV_ITEMS: Array<NavItem> = [
-  {
-    label: "Home",
-    href: routes.home,
-  },
-  {
-    label: "Quizzes",
-    href: routes.quizzes.base,
-  },
-  {
-    label: "Create New Quiz",
-    href: routes.quizzes.create,
-  },
-];
+export default NavBar;
