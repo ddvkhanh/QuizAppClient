@@ -7,17 +7,13 @@ const axiosInstance = axios.create({
     },
   });
 
-export const apiRequest = async <T>(endpoint: string, method: "GET" | "POST" | "PUT" | "DELETE", body?: any): Promise<T | null> => {
+export const apiRequest = async <T>(endpoint: string, method: "GET" | "POST" | "PUT" | "DELETE", body?: any): Promise<T> => {
     try {
         const response = await axiosInstance({
             url: endpoint,
             method,
             data: body,
         });
-
-        if (response.status === 204) {
-            return null; //Return null for No Content
-        }
         
         return response.data as T;
     } catch (error: any) {
