@@ -23,7 +23,7 @@ export default function Home() {
           />
         </div>
         <div className="flex justify-center">
-          <button className="p-3 bg-teal-600 shadow-lg text-white rounded-full hover:bg-teal-700"
+          <button className="animate-pulse p-3 bg-teal-600 shadow-lg text-white rounded-full hover:bg-teal-700"
             onClick={goToQuiz}>
             Take Quiz Now
           </button>

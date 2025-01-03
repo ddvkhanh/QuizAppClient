@@ -66,11 +66,8 @@ export default function QuestionsForm({ id }: { id?: string }) {
       console.log(payload);
       const response = await apiRequest(endpoint, method, payload);
 
-      if (response === null && method === "PUT") {
-        alert("Question updated successfully!");
-        router.push("/questions");
-      } else if (response) {
-        alert("Question created successfully!");
+      if (response) {
+        alert(isEditMode ? "Question updated successfully!" : "Question created successfully!");
         router.push("/questions");
       } else {
         throw new Error("Failed to save the question");
