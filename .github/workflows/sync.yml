@@ -4,13 +4,14 @@ on:
   push:
     branches:
       - master
-permissions: read-all|write-all
-
   
 jobs:
   sync_client:
     name: Sync Client to Main Repo
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
 
     steps:
       - name: Checkout Client Code
