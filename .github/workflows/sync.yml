@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write 
+      packages: write
 
     steps:
       - name: Checkout Client Code
@@ -29,3 +30,4 @@ jobs:
           git add QuizApp.Client/
           git commit -m "Sync QuizApp.Client changes"
           git push main-repo sync-client:master
+          
