@@ -1,6 +1,6 @@
+import NavBar from "components/NavBar";
 import type { Metadata } from "next";
-import "./globals.css";
-import { Provider } from "components/ui/provider";
+import "styles/globals.css";
 
 
 export const metadata: Metadata = {
@@ -14,9 +14,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-      <html lang='en' suppressHydrationWarning>
+    <html lang="en">
       <body>
-        <Provider>{children}</Provider>
+        <NavBar />
+        <main>{children}</main>
       </body>
     </html>          
   );
