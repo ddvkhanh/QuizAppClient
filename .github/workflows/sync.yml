@@ -1,0 +1,27 @@
+name: Sync Client to Main Repo
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  sync_client:
+    name: Sync Client to Main Repo
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Client Code
+        uses: actions/checkout@v3
+
+      - name: Push Client to Main Repo
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git remote add main-repo https://${{ secrets.PAT }}@github.com/ddvkhanh/QuizApp.git
+          git fetch main-repo
+          git checkout -b sync-client main-repo/master
+          rsync -av --delete ./ ./QuizApp.Client/
+          git add QuizApp.Client/
+          git commit -m "Sync QuizApp.Client changes"
+          git push main-repo sync-client:master
