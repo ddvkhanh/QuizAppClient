@@ -10,7 +10,7 @@ jobs:
     name: Sync Client to Main Repo
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       packages: write
 
     steps:
