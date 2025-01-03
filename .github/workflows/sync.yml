@@ -32,7 +32,7 @@ jobs:
           git remote add main-repo https://${{ secrets.PAT }}@github.com/ddvkhanh/QuizApp.git
           git fetch main-repo
           git checkout -b sync-client main-repo/master
-          rsync -av --delete ./ QuizApp.Client/
+          rsync -av --delete --ignore-missing-args ./ QuizApp.Client/
           git add QuizApp.Client/
           git commit -m "Sync QuizApp.Client changes"
           git push main-repo sync-client:master
