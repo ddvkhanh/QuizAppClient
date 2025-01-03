@@ -68,7 +68,7 @@ export default function QuestionsPage() {
               {questions.map((question) => (
               <li key={question.id} className="p-4 border rounded">
                 <p className="font-bold">{question.description}</p>
-                <p className="text-sm text-gray-600">Type: {question.questionType}</p>
+                <p className="text-sm text-gray-600">Type: {question.questionType === "single" ? "Single Select" : "Multiple Select"}</p>
                 <span className="space-x-2">
                   <button className="text-sm underline bg-transparent text-blue-600 hover:bg-blue-300" onClick={() => goToEditPage(question.id)}>Edit</button>
                   <button className="text-sm underline bg-transparent  text-red-600 hover:bg-red-300" onClick={() => handleDelete(question.id)}>Delete</button>

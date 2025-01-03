@@ -41,7 +41,7 @@ export default function QuizPage() {
           </div>
           <div className="flex justify-center"> 
             {!isQuizStart ? (
-                <button className="p-3 bg-teal-600 shadow-lg text-white rounded-full hover:bg-teal-700"
+                <button className="transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300  p-3 bg-teal-600 shadow-lg text-white rounded-full hover:bg-teal-700"
                     onClick = {toggleQuizMode}>
                 Start Quiz
                 </button>
@@ -50,15 +50,7 @@ export default function QuizPage() {
             
           </div>
           <div className="pt-7">
-            <ul className="space-y-4">
-              {questions.map((question) => (
-              <li key={question.id} className="p-4 border rounded">
-                <p className="font-bold">{question.description}</p>
-                <p className="text-sm text-gray-600">Type: {question.questionType}</p>
-
-              </li>
-              ))}
-            </ul>
+            
           </div>
           
         </div>
