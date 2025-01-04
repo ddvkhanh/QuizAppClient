@@ -3,6 +3,8 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { apiRequest } from "utils/api";
+import { useTimer } from "react-timer-hook";
+import { TIME_LIMIT } from "lib/constants";
 
 interface Question {
     id: string;
@@ -18,6 +20,18 @@ export default function QuizCard({ questions }: { questions: Question[] }) {
         questions.map((q) => ({ questionId: q.id, answer: "" }))
     );
     const router = useRouter();
+
+    const time = new Date();
+    const expiryTimestamp = new Date(time.getTime() + TIME_LIMIT*1000);
+    const { seconds, minutes, isRunning } = useTimer({
+        expiryTimestamp,
+        onExpire: () => handleTimeUp()
+    })
+
+    const handleTimeUp = () => {
+        alert("Time is up!");
+        handleSubmit();    
+    }
 
     const handleAnswerChange = (answer: string) => {
         const updatedAnswers = [...userAnswers];
@@ -52,18 +66,19 @@ export default function QuizCard({ questions }: { questions: Question[] }) {
     }
 
     const handleSubmit = async () => {
-        const endpoint = "/quiz";
+        const endpoint = "/quiz/submit";
         const method = "POST";
         const payload = {
             answers: userAnswers,
         }
 
         try {
+            console.log(payload);
             const response = await apiRequest<{ score: number }>(endpoint, method, payload);
             if (response) {
                 alert("Submitted Successfully");
             }
-            router.push("/quiz/score?score=${response.score}");
+            router.push(`/quiz/score?score=${response.score}`);
         } catch (error) {
             console.error(error);
             alert("Failed to submit the quiz. Please try again.");
@@ -72,8 +87,9 @@ export default function QuizCard({ questions }: { questions: Question[] }) {
     }
 
     return (
-        <div className="container mx-auto p-8">
-            <h1 className="text-2xl font-bold mb-4">Question</h1>
+        <div className="container mx-auto p-8">          
+            <h1 className="mb-5">Time Left: {minutes}:{seconds}</h1>
+            <h2 className="text-2xl font-bold mb-4">Question</h2>
             <p className="mb-6">{question.description}</p>
             {question.questionType === "single" ? (
                 <div className="mb-6">
@@ -83,7 +99,7 @@ export default function QuizCard({ questions }: { questions: Question[] }) {
                                 type="radio"
                                 name={`question-${currentIndex}`}
                                 value={option}
-                                checked={userAnswers[currentIndex] === option}
+                                checked={userAnswers[currentIndex].answer === option}
                                 onChange={() => handleAnswerChange(option)}
                                 className="mr-2"
                             />
@@ -98,9 +114,10 @@ export default function QuizCard({ questions }: { questions: Question[] }) {
                             <input
                                 type="checkbox"
                                 value={option}
-                                checked={userAnswers[currentIndex]?.includes(option)}
+                                checked={userAnswers[currentIndex]?.answer.includes(option)}
                                 onChange={(e) => handleMultipleAnswerChange(option, e.target.checked)}
                                 className="mr-2" />
+                                {option}
                         </label>
                     ))}
                 </div>
@@ -111,7 +128,7 @@ export default function QuizCard({ questions }: { questions: Question[] }) {
                     <button
                         onClick={handlePrevious}
                         disabled={currentIndex === 0}
-                        className="px-4 py-2 rounded text-white bg-teal-600 hover:bg-teal-700"
+                        className= "px-4 py-2 rounded text-white bg-teal-600 hover:bg-teal-700"
                     >Previous</button>
                     <button
                         onClick={handleNext}
