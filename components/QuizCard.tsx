@@ -87,8 +87,8 @@ export default function QuizCard({ questions }: { questions: Question[] }) {
     }
 
     return (
-        <div className="container mx-auto p-8">          
-            <h1 className="mb-5">Time Left: {minutes}:{seconds}</h1>
+        <div className="container mx-auto p-10">          
+            <h1 className="mb-5 rounded-xl text-red-700 mb-10 bg-white">Time Left: {minutes}:{seconds}</h1>
             <h2 className="text-2xl font-bold mb-4">Question</h2>
             <p className="mb-6">{question.description}</p>
             {question.questionType === "single" ? (

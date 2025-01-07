@@ -21,7 +21,7 @@ export default function QuizPage() {
 
   const fetchQuestions = async () => {
     try {
-      const endpoint = "/questions";
+      const endpoint = "/questions?random=true";  //called the backend fetch questions randomly
       const method = "GET";
       const response: Question[] = await apiRequest<Question[]>(endpoint, method);
       setQuestions(response);
