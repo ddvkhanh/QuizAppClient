@@ -3,11 +3,9 @@
 import { useEffect, useState } from "react";
 import { apiRequest } from "utils/api";
 import { format } from "date-fns";
-import { toZonedTime } from "date-fns-tz";
 
 export default function ResultsPage() {
   const [results, setResults] = useState<Result[]>([]);
-  const timeZone = "Australia/Sydney";
 
     useEffect(() => {
       const fetchResults = async() => {
@@ -37,11 +35,10 @@ export default function ResultsPage() {
           </thead>
           <tbody>
             {results.map((r) => {
-              const utcDate = new Date(r.takenAt);
-              const sydneyDate = toZonedTime(utcDate, timeZone);
+              const scoreDate = new Date(r.takenAt);
               return (
                 <tr key={r.id}>
-                  <td className="border border-gray-300 px-4 py-2">{format(sydneyDate, "dd-MM-yyyy HH:mm:ss a")}</td>
+                  <td className="border border-gray-300 px-4 py-2">{format(scoreDate, "dd-MM-yyyy HH:mm:ss a")}</td>
                   <td className="border border-gray-300 px-4 py-2">{r.score}</td>
                 </tr>
               )
