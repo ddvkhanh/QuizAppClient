@@ -1,4 +1,5 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+This repo is the frontend of QuizApp application: https://github.com/ddvkhanh/QuizApp 
 
 ## Getting Started
 
