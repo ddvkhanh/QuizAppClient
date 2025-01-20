@@ -1,4 +1,5 @@
 import NavBar from "components/NavBar";
+import UserProvider from "context/UserContext";
 import type { Metadata } from "next";
 import "styles/globals.css";
 
@@ -15,9 +16,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        <UserProvider>
           <NavBar />
           <main>{children}</main>
+        </UserProvider>
       </body>
-    </html>          
+    </html>
   );
 }

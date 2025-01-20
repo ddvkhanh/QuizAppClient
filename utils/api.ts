@@ -18,6 +18,10 @@ export const apiRequest = async <T>(endpoint: string, method: "GET" | "POST" | "
         return response.data as T;
     } catch (error: any) {
         console.error("API Request Error:", error?.response?.data || error.message);
+
+        if (error?.response?.status === 401) {
+            throw new Error("User is not authorized");
+        }
         throw new Error(error?.reponse?.data?.message || "API request failed");
     }      
 }
