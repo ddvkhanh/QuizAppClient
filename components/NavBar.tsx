@@ -2,13 +2,26 @@
 
 import { useState } from "react";
 import { Dialog, DialogPanel } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon, XMarkIcon, ArrowLeftEndOnRectangleIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import { NAV_ITEMS } from "lib/constants";
+import { useRouter } from "next/navigation";
 import routes from "lib/routes";
-
+import { useUserContext } from "context/UserContext";
 
 export default function NavBar() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const { user } = useUserContext();
+
+    const router = useRouter();
+
+    const goToLoginPage = () => {
+        router.push(routes.login);
+    }
+
+    const goToLogoutPage = () => {
+        router.push(routes.logout);
+    }
 
     return (
         <header className="absolute inset-x-0 sticky top-0 z-50 text-white">
@@ -26,13 +39,29 @@ export default function NavBar() {
                         <Bars3Icon aria-hidden="true" className="h-6 w-6" />
                     </button>
                 </div>
-                <div className="hidden lg:flex lg:gap-x-12 items-center justify-center w-full">
+                <div className="w-5/6 hidden lg:flex lg:gap-x-12 w-full">
                     {NAV_ITEMS.map((item) => (
                         <Link href={item.href}
                             key={item.label}
                             className="-mx-3 block text-white no-underline rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:bg-gray-500"
                         >{item.label}</Link>
                     ))}
+                </div>
+                <div className="w-1/6 hidden lg:flex justify-end">
+                    {!user ?
+                        (
+                            <button className="-mx-3 flex block text-white text-base font-semibold no-underline rounded-lg p-3 bg-teal-600 hover:bg-teal-700"
+                                onClick={goToLoginPage}>
+                                <ArrowLeftEndOnRectangleIcon aria-hidden="true" className="h-6 w-6" />
+                                <span className="px-2">Log In</span>
+                            </button>
+                        ) : (
+                            <button className="-mx-3 flex block text-white text-base font-semibold no-underline rounded-lg p-3 bg-teal-600 hover:bg-teal-700"
+                                onClick={goToLogoutPage}>
+                                <ArrowLeftEndOnRectangleIcon aria-hidden="true" className="h-6 w-6" />
+                                <span className="px-2">Log Out</span>
+                            </button>
+                        )}
                 </div>
             </nav>
             <Dialog
@@ -51,6 +80,10 @@ export default function NavBar() {
                             <span className="sr-only">Close menu</span>
                             <XMarkIcon aria-hidden="true" className="h-6 w-6" />
                         </button>
+                        {user ? (
+                            <span className="text-slate-600">User: {user.name}</span>
+                        ) : (<></>)}
+
                     </div>
                     <div className="mt-6 flow-root">
                         <div className="-my-6 divide-y divide-gray-500/10">
@@ -63,6 +96,22 @@ export default function NavBar() {
                                 ))}
                             </div>
                         </div>
+                        <div className="mt-6 mx-3">
+                            {!user ?
+                                (
+                                    <button className="-mx-3 flex block text-white text-base font-semibold no-underline rounded-lg p-3 bg-teal-600 hover:bg-teal-700"
+                                        onClick={goToLoginPage}>
+                                        <ArrowLeftEndOnRectangleIcon aria-hidden="true" className="h-6 w-6" />
+                                        <span className="px-2">Log In</span>
+                                    </button>
+                                ) : (
+                                    <button className="-mx-3 flex block text-white text-base font-semibold no-underline rounded-lg p-3 bg-teal-600 hover:bg-teal-700"
+                                        onClick={goToLogoutPage}>
+                                        <ArrowLeftEndOnRectangleIcon aria-hidden="true" className="h-6 w-6" />
+                                        <span className="px-2">Log Out</span>
+                                    </button>
+                                )}
+                        </div>
                     </div>
                 </DialogPanel>
             </Dialog>
@@ -70,26 +119,4 @@ export default function NavBar() {
     );
 }
 
-interface NavItem {
-  label: string;
-  href: string;
-}
 
-const NAV_ITEMS: Array<NavItem> = [
-  {
-    label: "Home",
-    href: routes.home,
-  },
-  {
-    label: "Take Quiz",
-    href: routes.quiz.base,
-  },
-  {
-    label: "Manage Question",
-    href: routes.questions.base,
-  },
-  {
-    label: "View Attempts",
-    href: routes.attempts.base,
-  },
-];

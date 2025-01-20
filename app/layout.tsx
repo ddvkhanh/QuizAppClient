@@ -1,7 +1,7 @@
 import NavBar from "components/NavBar";
+import UserProvider from "context/UserContext";
 import type { Metadata } from "next";
 import "styles/globals.css";
-
 
 export const metadata: Metadata = {
   title: "QuizApp",
@@ -16,9 +16,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <NavBar />
-        <main>{children}</main>
+        <UserProvider>
+          <NavBar />
+          <main>{children}</main>
+        </UserProvider>
       </body>
-    </html>          
+    </html>
   );
 }

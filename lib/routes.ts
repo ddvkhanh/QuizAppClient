@@ -12,7 +12,12 @@ const routes = {
     },
     attempts: {
         base: "/attempts",
-    }
+    },
+    login: "/auth/login",
+    logout: "/auth/logout",
+    userProfile: "/auth/profile"
+
+
 }
 
 export default routes;

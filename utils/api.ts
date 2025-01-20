@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-    baseURL: "http://localhost:5001/api",
+    baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
     headers: {
       "Content-Type": "application/json",
     },
@@ -18,6 +18,10 @@ export const apiRequest = async <T>(endpoint: string, method: "GET" | "POST" | "
         return response.data as T;
     } catch (error: any) {
         console.error("API Request Error:", error?.response?.data || error.message);
+
+        if (error?.response?.status === 401) {
+            throw new Error("User is not authorized");
+        }
         throw new Error(error?.reponse?.data?.message || "API request failed");
     }      
 }
